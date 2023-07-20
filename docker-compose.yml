@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus:/etc/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  node-exporter-1:
+    image: prom/node-exporter:latest
+    ports:
+      - 9100:9100
+
+  node-exporter-2:
+    image: prom/node-exporter:latest
+    ports:
+      - 9101:9100
